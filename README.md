@@ -1,4 +1,4 @@
-# CristoInvoice - Brutal INVOICE System
+# CristoforoInvoice - Brutal INVOICE System
 
 # QUICK(ONLY) start
 Just download freaking PHP 8.1 or whatever and run
