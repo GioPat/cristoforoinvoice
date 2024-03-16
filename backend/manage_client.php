@@ -20,11 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     ]);
   } elseif (isset($_POST["update"])) {
-    // Validate and sanitize input
+
     $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING);
-    if ($id === null) {
-      // Redirect back to the list_clients.php or display a success message
-      header("Location: /?page=clients&error=ID is required"); // Redirect to the clients list
+    if ($id == null) {
+      header("Location: /?page=clients&error=ID is required when UPDATING!"); // Redirect to the clients list
       exit();
     }
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
@@ -44,7 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } elseif (isset($_POST["delete"])) {
     // Validate and sanitize input
     $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING);
-
+    if ($id == null) {
+      header("Location: /?page=clients&error=ID is required when Deleting!"); // Redirect to the clients list
+      exit();
+    }
     // Delete from the database
     $stmt = $pdo->prepare("DELETE FROM clients WHERE id = :id");
     $stmt->execute([

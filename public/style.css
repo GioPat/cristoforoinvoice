@@ -172,6 +172,12 @@ input[type="submit"][name="delete"]:hover {
 	}
 }
 
+h1 {
+	margin: 2rem;
+	font-weight: bold;
+	font-size: medium;
+}
+
 /** Error banner **/
 .error-popup {
 	display: none; /* Hidden by default */
@@ -216,4 +222,8 @@ input[type="submit"][name="delete"]:hover {
 	margin: 0; /* Adjust the margin as needed */
 	color: #333; /* Dark grey color for text */
 	font-size: 16px; /* Slightly larger font size for readability */
+}
+
+tr.overdue {
+	background-color: #ffcccc; /* Light red; adjust the color as needed */
 }
