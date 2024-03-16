@@ -144,12 +144,20 @@ input[type="submit"][name="add"] {
 	background-color: #4CAF50; /* Green background */
 }
 
+input[type="submit"][name="update"] {
+	background-color: #008CBA; /* Blue background */
+}
+
 input[type="submit"][name="delete"] {
 	background-color: #f44336; /* Red background */
 }
 
 input[type="submit"][name="add"]:hover {
 	background-color: #45a049; /* Darker green background on hover */
+}
+
+input[type="submit"][name="update"] {
+	background-color: #006181; /* Darker Blue background on hover */
 }
 
 input[type="submit"][name="delete"]:hover {
@@ -162,4 +170,50 @@ input[type="submit"][name="delete"]:hover {
 	table, input[type="text"], input[type="submit"] {
 			width: 100%; /* Full-width on smaller screens */
 	}
+}
+
+/** Error banner **/
+.error-popup {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	z-index: 1000; /* Sit on top */
+	background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+}
+
+.error-content {
+	background-color: #ffdddd; /* Light red background */
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border-left: 6px solid #f44336; /* Solid red border on the left */
+	width: 80%; /* Could be more or less, depending on screen size */
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); /* Shadow for depth */
+	position: relative; /* Needed for absolute positioning of the close button */
+}
+
+.close {
+	position: absolute;
+	right: 10px;
+	top: 0;
+	color: #aaa;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #f44336; /* Darker red when hovering/focusing on the close button */
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/* Style for the error message text */
+#errorPopup p {
+	margin: 0; /* Adjust the margin as needed */
+	color: #333; /* Dark grey color for text */
+	font-size: 16px; /* Slightly larger font size for readability */
 }

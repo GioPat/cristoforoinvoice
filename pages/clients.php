@@ -16,7 +16,7 @@ try {
 
 <h1>Clients</h1>
 <button id="toggleFormButton">Hide Form</button>
-<form id="clientForm" action="backend/add_client.php" method="post">
+<form id="clientForm" action="backend/manage_client.php" method="post">
     <label for="name">ID:</label>
     <input type="text" id="id" name="id"><br>
     <label for="name">Name:</label>
@@ -27,7 +27,8 @@ try {
     <input type="text" id="company_id" name="company_id" required><br>
     <label for="vat_number">VAT Number:</label>
     <input type="text" id="vat_number" name="vat_number"><br>
-    <input type="submit" name="add" value="Add/Update Client">
+    <input type="submit" name="add" value="Add Client">
+    <input type="submit" name="update" value="Update Client">
     <input type="submit" name="delete" value="Delete Client">
 </form>
 <table>
