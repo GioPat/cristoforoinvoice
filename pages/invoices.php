@@ -27,6 +27,7 @@ try {
 <body>
 
 <h1>Invoices</h1>
+<button><a href="/pages/invoices/manage_invoice.php">Add New Invoice</a></button>
 <table>
     <thead>
         <tr>
@@ -47,7 +48,7 @@ try {
             <td><?= htmlspecialchars($invoice['issue_date']) ?></td>
             <td><?= htmlspecialchars($invoice['due_date']) ?></td>
             <td>
-                <a href="/pages/invoices/invoice_details.php?invoiceId=<?= $invoice['id'] ?>">Manage</a>
+                <a href="/pages/invoices/manage_invoice.php?invoiceId=<?= $invoice['id'] ?>">Manage</a>
             </td>
         </tr>
         <?php endforeach; ?>

@@ -22,7 +22,9 @@ if (!$invoice) {
     $invoice = [
         'id' => null,
         'client_id' => null,
-        'date' => date('Y-m-d'), // Today's date
+        'discount' => 0,
+        'notes' => null,
+        'issue_date' => date('Y-m-d'), // Today's date
         'due_date' => date('Y-m-d', strtotime('+30 days')) // 30 days from today
     ];
 }
@@ -36,7 +38,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
 
 <h1><?= $invoiceId ? "Edit Invoice" : "Add New Invoice" ?></h1>
 <button id="toggleFormButton" >Hide Invoice details</button>
-<form id="invoiceForm" action="save_invoice.php" method="post">
+<form id="invoiceForm" action="/backend/manage_invoice.php" method="post">
     <input type="hidden" name="invoiceId" value="<?= htmlspecialchars($invoice['id']) ?>">
 
     <label for="client_id">Client:</label>
@@ -48,14 +50,17 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
         <?php endforeach; ?>
     </select>
 
-    <label for="invoiceDate">Date:</label>
-    <input type="date" id="invoiceDate" name="invoiceDate" value="<?= htmlspecialchars($invoice['issue_date']) ?>" required>
+    <label for="issue_date">Date:</label>
+    <input type="date" id="issue_date" name="issue_date" value="<?= htmlspecialchars($invoice['issue_date']) ?>" required>
 
-    <label for="dueDate">Due Date:</label>
-    <input type="date" id="dueDate" name="dueDate" value="<?= htmlspecialchars($invoice['due_date']) ?>" required>
+    <label for="due_date">Due Date:</label>
+    <input type="date" id="due_date" name="due_date" value="<?= htmlspecialchars($invoice['due_date']) ?>" required>
     <br />
     <label for="discount">Discount:</label>
     <input type="numer" id="discount" name="discount" min="0" max="1" value="<?= htmlspecialchars($invoice['discount']) ?>">
+    <br />
+    <label for="notes">Notes:</label>
+    <input type="text" id="notes" name="notes" value="<?= htmlspecialchars($invoice['notes']) ?>">
     <br />
     <!-- Add more fields as needed -->
 
@@ -86,6 +91,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
             <th>Quantity</th>
             <th>Price</th>
             <th>Currency</th>
+            <th>Actions</th>
             <!-- Add columns as needed -->
         </tr>
     </thead>
@@ -97,13 +103,17 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
             <td><?= htmlspecialchars($item['quantity']) ?></td>
             <td><?= htmlspecialchars($item['price']) ?></td>
             <td><?= htmlspecialchars($item['currency']) ?></td>
+            <td>
+                <a href="/pages/invoices/manage_item.php?invoiceId=<?= $invoiceId ?>&itemId=<?= $item['id'] ?>">Manage</a>
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
-<button onclick="window.location='add_item.php?invoice_id=<?= $invoiceId ?>'">Add Item</button>
-<button onclick="window.location='export_invoice.php?invoice_id=<?= $invoiceId ?>'">Export PDF</button>
-
+<?php if($invoiceId): ?>
+    <button onclick="window.location='/pages/invoices/manage_item.php?invoiceId=<?= $invoiceId ?>'">Add Item</button>
+    <button onclick="window.location='export_invoice.php?invoice_id=<?= $invoiceId ?>'">Export PDF</button>
+<?php endif; ?>
 <!-- Optionally, add a section here to manage invoice items if editing -->
 </body>
 <script>
@@ -129,10 +139,19 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
             }
         });
     });
-    const form = document.getElementById('invoiceForm');
-    form.style.display = "none";
-    const toggleButton = document.getElementById('toggleFormButton');
-    toggleButton.textContent = "Show Invoice details";
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const invoiceId = urlParams.get('invoiceId');
+    console.log(invoiceId);
+    if (invoiceId === null) {
+        const form = document.getElementById('invoiceForm');
+        form.style.display = "block";
+        const toggleButton = document.getElementById('toggleFormButton');
+        toggleButton.textContent = "Hide Invoice details";
+    } else {
+        const form = document.getElementById('invoiceForm');
+        form.style.display = "none";
+        const toggleButton = document.getElementById('toggleFormButton');
+        toggleButton.textContent = "Show Invoice details";
+    }
 </script>
 </html>

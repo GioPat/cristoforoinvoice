@@ -30,10 +30,10 @@ $pageTitle = $itemId ? "Edit Invoice Item" : "Add New Invoice Item";
 <!DOCTYPE html>
 <html lang="en">
 <?php require(__DIR__."/../../templates/header.php"); ?>
-
-<h1><?= $itemId ? "Edit Invoice <?= $invoiceId ?> Item" : "Add New Invoice <?= $invoiceId ?> Item" ?></h1>
-<form action="save_item.php" method="post">
-  <input type="hidden" name="invoiceId" value="<?= htmlspecialchars($itemId) ?>">
+<h1><?= $itemId ? "Edit Invoice" . $invoiceId . " Item" : "Add New Invoice " . $invoiceId . " Item" ?></h1>
+<form action="/backend/manage_item.php" method="post">
+  <input type="hidden" name="id" value="<?= htmlspecialchars($itemId) ?>">
+  <input type="hidden" name="invoice_id" value="<?= htmlspecialchars($invoiceId) ?>">
   <label for="description">Description:</label>
   <input type="text" id="description" name="description" value="<?= htmlspecialchars($item['description']) ?>" required> <br />
   <label for="subdescription">Sub-Description:</label>
