@@ -87,7 +87,7 @@ if($invoice['discount'] > 0) {
   $totals[] = ["DISCOUNT " . $percFormatter->format($invoice["discount"]), "-" . $currencyFormatter->formatCurrency($subTotal * $invoice['discount'], $items[0]["currency"])];
 }
 $totals[] = ["VAT " . $percFormatter->format($vat), $currencyFormatter->formatCurrency($vatAmount, $items[0]["currency"])];
-$totals[] = ["TOTAL", $currencyFormatter->formatCurrency($total, $items[0]["currency"])];
+$totals[] = ["GRAND-TOTAL", $currencyFormatter->formatCurrency($total, $items[0]["currency"])];
 $invoicr->set("totals", $totals);
 if ($companyInfo["payment_details"] !== NULL) {
   $invoicr->set("notes", [
