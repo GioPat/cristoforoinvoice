@@ -118,7 +118,7 @@ label {
 	margin-bottom: 10px; /* Space between the label and input */
 }
 
-input[type="text"]
+input
 {
 	width: calc(100% - 22px); /* Full-width inputs */
 	padding: 5px;
@@ -175,7 +175,13 @@ input[type="submit"][name="delete"]:hover {
 h1 {
 	margin: 2rem;
 	font-weight: bold;
-	font-size: medium;
+	font-size: 18pt;
+}
+
+h2 {
+	margin: 1rem;
+	font-weight: bold;
+	font-size: 14pt;
 }
 
 /** Error banner **/
@@ -227,3 +233,33 @@ h1 {
 tr.overdue {
 	background-color: #ffcccc; /* Light red; adjust the color as needed */
 }
+
+.info-block {
+	display: flex;
+	flex-wrap: wrap;
+	background-color: #f7f7f7; /* Light grey background */
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Soft shadow for depth */
+	max-width: 100%;
+	margin: 20px auto; /* Centering the block */
+}
+
+.info-item {
+	flex: 1 1 200px; /* Flex grow, flex shrink, and basis */
+	margin: 10px;
+	text-align: center; /* Center the text */
+}
+
+.info-title {
+	font-size: 16px;
+	color: #333; /* Dark grey color for text */
+	margin-bottom: 5px; /* Space between title and value */
+}
+
+.info-value {
+	font-size: 20px;
+	font-weight: bold;
+	color: #007BFF; /* Blue color for emphasis */
+}
+

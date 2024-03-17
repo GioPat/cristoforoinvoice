@@ -1,13 +1,16 @@
 <?php
     $pageTitle = $pageTitle ?? "Home";
+    require(__DIR__."/../routes.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CristoInvoice - <?= $pageTitle ?></title>
-    <link rel="stylesheet" href="http://localhost:8080/public/style.css">
+    <title>CristoforoInvoice - <?= $pageTitle ?></title>
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/choices.min.css">
+    <script src="/public/js/choices.min.js"></script>
 </noscript>
 </head>
 <body>
@@ -41,7 +44,7 @@ $errorMsg = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
 <nav>
     <ul>
         <?php foreach ($routes as $name => $path): ?>
-            <li><a href="?page=<?= $name ?>"><?= ucfirst($name) ?></a></li>
+            <li><a href="<?= $path ?>"><?= ucfirst($name) ?></a></li>
         <?php endforeach; ?>
     </ul>
 </nav>

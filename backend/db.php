@@ -1,12 +1,11 @@
 <?php
 // db.php
-$projectRootDir = dirname(__DIR__); // This goes up one directory from the current 'backend' directory
 
 // Define the absolute path to your database file
-$databasePath = $projectRootDir . '/db.sqlite';
+$dbConnString = $_ENV["DATABASE_CONN_STRING"] ?? "sqlite:" . dirname(__DIR__) . '/db.sqlite';
 
 try {
-    $pdo = new PDO("sqlite:" . $databasePath);
+    $pdo = new PDO($dbConnString);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Create tables
@@ -15,7 +14,8 @@ try {
         name TEXT NOT NULL,
 		vat_number TEXT,
 		federal_id TEXT NOT NULL,
-        address TEXT NOT NULL
+        address TEXT NOT NULL,
+        UNIQUE(name)
         -- add other fields as needed
     )");
 
@@ -32,7 +32,7 @@ try {
     )");
 
 
-    $pdo->exec("CREATE TABLE IF NOT EXISTS invoice (
+    $pdo->exec("CREATE TABLE IF NOT EXISTS invoices (
         id INTEGER PRIMARY KEY,
         invoice_number TEXT NOT NULL,
         client_id INTEGER NOT NULL,

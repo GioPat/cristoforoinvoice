@@ -1,6 +1,6 @@
 <?php
 // Include your database connection file
-require_once("backend/db.php"); // Adjust this path as needed
+require_once("../backend/db.php"); // Adjust this path as needed
 
 try {
     $stmt = $pdo->query("SELECT * FROM clients");
@@ -12,21 +12,21 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include "templates/header.php" ?>
+<?php require(__DIR__."/../templates/header.php"); ?>
 
 <h1>Clients</h1>
 <button id="toggleFormButton">Hide Form</button>
 <form id="clientForm" action="backend/manage_client.php" method="post">
     <label for="name">ID:</label>
-    <input type="text" id="id" name="id"><br>
+    <input type="text" id="id" name="id"><br />
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br>
+    <input type="text" id="name" name="name" required><br />
     <label for="address">Address:</label>
-    <input type="text" id="address" name="address" required><br>
+    <input type="text" id="address" name="address" required><br />
     <label for="company_id">Company ID:</label>
-    <input type="text" id="company_id" name="company_id" required><br>
+    <input type="text" id="company_id" name="company_id" required><br />
     <label for="vat_number">VAT Number:</label>
-    <input type="text" id="vat_number" name="vat_number"><br>
+    <input type="text" id="vat_number" name="vat_number"><br />
     <input type="submit" name="add" value="Add Client">
     <input type="submit" name="update" value="Update Client">
     <input type="submit" name="delete" value="Delete Client">

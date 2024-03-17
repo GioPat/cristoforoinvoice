@@ -1,6 +1,6 @@
 <?php
 // Include your database connection file
-require_once("backend/db.php"); // Adjust this path as needed
+require_once(__DIR__."/../backend/db.php");
 
 try {
     $year_stmt = $pdo->query("SELECT value FROM settings WHERE key = 'year'");
@@ -11,7 +11,7 @@ try {
     $stmt = $pdo->query("
         SELECT i.id, c.name as client_name, i.issue_date, i.invoice_number, i.due_date, (i.due_date < DATE('now')) as is_overdue
         FROM (
-            SELECT * FROM invoice WHERE substr(issue_date, 1, 4) = '$year'
+            SELECT * FROM invoices WHERE substr(issue_date, 1, 4) = '$year'
         ) as i left join clients as c ON i.client_id = c.id
         ORDER BY issue_date DESC
     ");
@@ -23,7 +23,7 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include "templates/header.php" ?>
+<?php require(__DIR__."/../templates/header.php"); ?>
 <body>
 
 <h1>Invoices</h1>
@@ -47,7 +47,7 @@ try {
             <td><?= htmlspecialchars($invoice['issue_date']) ?></td>
             <td><?= htmlspecialchars($invoice['due_date']) ?></td>
             <td>
-                <a href="?page=invoices/invoice_details.php?id=<?= $invoice['id'] ?>">Details</a>
+                <a href="/pages/invoices/invoice_details.php?invoiceId=<?= $invoice['id'] ?>">Manage</a>
             </td>
         </tr>
         <?php endforeach; ?>
