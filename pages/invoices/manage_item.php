@@ -24,6 +24,9 @@ if(!$item) {
     'currency' => $defaultCurrency
   ];
 }
+$stmt = $pdo->prepare("SELECT iso_code, name FROM currencies");
+$stmt->execute();
+$currencies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $pageTitle = $itemId ? "Edit Invoice Item" : "Add New Invoice Item";
 ?>
 
@@ -43,9 +46,27 @@ $pageTitle = $itemId ? "Edit Invoice Item" : "Add New Invoice Item";
   <label for="price">Price:</label>
   <input type="number" id="price" min="0" name="price" value="<?= htmlspecialchars($item['price']) ?>" required> <br />
   <label for="currency">Currency:</label>
-  <input type="text" id="currency" name="currency" value="<?= htmlspecialchars($item['currency']) ?>" required> <br />
+  <select id="currency" name="currency" class="choices" placeholder="Select a currency">
+    <?php foreach ($currencies as $currency): ?>
+        <option value="<?= $currency['iso_code'] ?>" <?= $currency['iso_code'] == $item["currency"] ? 'selected' : '' ?>>
+            <?= htmlspecialchars($currency['iso_code']) ?> (<?= $currency['name'] ?>)
+        </option>
+    <?php endforeach; ?>
+  </select>
   <input type="submit" name="add" value="<?= $itemId ? "Update item" : "Add Item" ?>">
   <?php if($itemId): ?>
     <input type="submit" name="delete" value="Delete Item">
   <?php endif; ?>
 </form>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var element = document.getElementById('currency');
+    var choices = new Choices(element, {
+        removeItemButton: true, // Adds a button to remove selected item
+        searchEnabled: true, // Enables search functionality
+        searchPlaceholderValue: 'Select currency', // Custom search placeholder
+        itemSelectText: '', // Text to show for selecting an item
+        shouldSort: false, // Disable sorting if your options are pre-ordered
+    });
+  });
+</script>

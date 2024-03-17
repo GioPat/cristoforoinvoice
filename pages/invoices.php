@@ -1,7 +1,7 @@
 <?php
 // Include your database connection file
 require_once(__DIR__."/../backend/db.php");
-
+require_once(__DIR__."/../components/button.php");
 try {
     $year_stmt = $pdo->query("SELECT value FROM settings WHERE key = 'year'");
     $year = $year_stmt->fetchColumn();
@@ -48,7 +48,7 @@ try {
             <td><?= htmlspecialchars($invoice['issue_date']) ?></td>
             <td><?= htmlspecialchars($invoice['due_date']) ?></td>
             <td>
-                <a href="/pages/invoices/manage_invoice.php?invoiceId=<?= $invoice['id'] ?>">Manage</a>
+                <?= renderButton("/pages/invoices/manage_invoice.php?invoiceId=" . $invoice['id'], "Manage") ?>
             </td>
         </tr>
         <?php endforeach; ?>

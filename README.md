@@ -4,24 +4,33 @@ Invoicing software with some very very basic ERP/CRM features aimed at easing th
 # QUICK(ONLY) start
 Just download freaking PHP 8.1 or whatever and run
 
-**Make sure to have the pg_sqlite extension active for your PHP runtime**
+**Make sure to have the pg_sqlite and intl extension active for your PHP runtime**
 
 ```php
 php -S localhost:8080
 ```
 
+Insert the currencies of your interests or import the full that you can download from [here](https://github.com/vijinho/ISO-Country-Data/blob/master/currencies.csv)
 
 ## Settings
 Invoice number format tokens
 ```
-  - Use PHP formatted string by setting the format row in the settings table
+  - Use PHP formatted string by setting the format row in the settings table, Y is the year, the rest is using sprintf format.
 ```
+
 # Core (missing) features
 
 - NO backup
 - NO config to be installed
 - NO headaches
 - NO CONFIG (Almost, you can set a remote DB connection string through the `DATABASE_CONN_STRING` env variable)
+
+
+# TODO
+
+- Statistics
+- Extract payment details in a dedicated table
+- Settings page
 
 
 # Yet another Invoicing software??

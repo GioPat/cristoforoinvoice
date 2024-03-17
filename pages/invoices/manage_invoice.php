@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__."/../../backend/db.php"); // Include your database connection
+require_once(__DIR__."/../../backend/db.php");
+require_once(__DIR__."/../../components/button.php");
 
 $invoiceId = isset($_GET["invoiceId"]) ? (int)$_GET["invoiceId"] : null;
 $invoice = null;
@@ -9,9 +10,9 @@ if ($invoiceId) {
     $stmt = $pdo->prepare("SELECT * FROM invoices WHERE id = ?");
     $stmt->execute([$invoiceId]);
     $invoice = $stmt->fetch(PDO::FETCH_ASSOC);
-    $items = $pdo->query("SELECT * FROM invoice_items WHERE invoice_id = $invoiceId")->fetchAll(PDO::FETCH_ASSOC);
+    $items = $pdo->query("SELECT i.*, price * quantity as total_price FROM invoice_items as i WHERE invoice_id = $invoiceId")->fetchAll(PDO::FETCH_ASSOC);
     $vat = $pdo->query("SELECT value FROM settings WHERE key = 'vat'")->fetchColumn() ?? 0;
-    $subTotal = array_sum(array_column($items, "price"));
+    $subTotal = array_sum(array_column($items, "total_price"));
     $afterDiscount = $subTotal - ($subTotal * $invoice['discount']);
     $vatAmount = $afterDiscount * $vat;
     $total = $afterDiscount + $vatAmount;
@@ -37,7 +38,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
 <?php require(__DIR__."/../../templates/header.php"); ?>
 
 <h1><?= $invoiceId ? "Edit Invoice" : "Add New Invoice" ?></h1>
-<button id="toggleFormButton" >Hide Invoice details</button>
+<button class="button" id="toggleFormButton" >Hide Invoice details</button>
 <form id="invoiceForm" action="/backend/manage_invoice.php" method="post">
     <input type="hidden" name="invoiceId" value="<?= htmlspecialchars($invoice['id']) ?>">
 
@@ -53,6 +54,9 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
     <label for="issue_date">Date:</label>
     <input type="date" id="issue_date" name="issue_date" value="<?= htmlspecialchars($invoice['issue_date']) ?>" required>
 
+    <label for="po_reference">Purchase Order / Contract reference:</label>
+    <input type="po_reference" id="po_reference" name="po_reference" value="<?= htmlspecialchars($invoice['po_reference']) ?>" required>
+
     <label for="due_date">Due Date:</label>
     <input type="date" id="due_date" name="due_date" value="<?= htmlspecialchars($invoice['due_date']) ?>" required>
     <br />
@@ -66,7 +70,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
 
     <input type="submit" name="add" value="<?= $invoiceId ? "Update Invoice" : "Add Invoice" ?>">
     <?php if($invoiceId): ?>
-    <input type="submit" name="delete" value="Delete Invoice">
+    <input type="submit" onclick="return confirm('Are you sure you want to delete the invoice?')" name="delete" value="Delete Invoice">
     <?php endif; ?>
 </form>
 <div class="info-block">
@@ -83,7 +87,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
         <div class="info-value"><?= $total . $currency ?></div>
     </div>
 </div>
-<table>
+<table style="margin-bottom: 1rem;">
     <thead>
         <tr>
             <th>Description</th>
@@ -104,15 +108,15 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
             <td><?= htmlspecialchars($item['price']) ?></td>
             <td><?= htmlspecialchars($item['currency']) ?></td>
             <td>
-                <a href="/pages/invoices/manage_item.php?invoiceId=<?= $invoiceId ?>&itemId=<?= $item['id'] ?>">Manage</a>
+                <?= renderButton("/pages/invoices/manage_item.php?invoiceId=" . $invoiceId . "&itemId=" . $item['id'], "Manage") ?>
             </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
 <?php if($invoiceId): ?>
-    <button onclick="window.location='/pages/invoices/manage_item.php?invoiceId=<?= $invoiceId ?>'">Add Item</button>
-    <button onclick="window.location='export_invoice.php?invoice_id=<?= $invoiceId ?>'">Export PDF</button>
+    <?= renderButton("/pages/invoices/manage_item.php?invoiceId=" . $invoiceId, "Add Item"); ?>
+    <?= renderbutton("/backend/export_invoice.php?invoiceId=" . $invoiceId, "Export PDF"); ?>
 <?php endif; ?>
 <!-- Optionally, add a section here to manage invoice items if editing -->
 </body>

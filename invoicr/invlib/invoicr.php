@@ -169,7 +169,6 @@ class Invoicr {
     // (H1) LOAD LIBRARY
     require $this->pathV . "autoload.php";
     $mpdf = new \Mpdf\Mpdf();
-
     // (H2) LOAD TEMPLATE FILE
     $file = $this->pathP . $this->template . ".php";
     if (!file_exists($file)) { exit("$file not found."); }

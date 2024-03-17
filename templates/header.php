@@ -8,6 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CristoforoInvoice - <?= $pageTitle ?></title>
+    <link rel="icon" type="image/x-icon" href="/public/img/favicon-for-light.ico" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/x-icon" href="/public/img/favicon-for-dark.ico" media="(prefers-color-scheme: dark)">
+
     <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="/public/css/choices.min.css">
     <script src="/public/js/choices.min.js"></script>

@@ -31,12 +31,14 @@ try {
         value TEXT NOT NULL
     )");
 
-
+    // SQLite does not have a boolean type :)
     $pdo->exec("CREATE TABLE IF NOT EXISTS invoices (
         id INTEGER PRIMARY KEY,
         invoice_number TEXT NOT NULL,
         client_id INTEGER NOT NULL,
+        po_reference TEXT NOT NULL,
         issue_date TEXT NOT NULL,
+        payed INTEGER NOT NULL DEFAULT 0,
         due_date TEXT NOT NULL,
         notes TEXT,
         discount REAL,
@@ -52,6 +54,13 @@ try {
         price REAL NOT NULL,
         currency TEXT NOT NULL,
         FOREIGN KEY (invoice_id) REFERENCES invoice(id)
+    )");
+    $pdo->exec("CREATE TABLE IF NOT EXISTS currencies (
+        id INTEGER PRIMARY KEY,
+        iso_code TEXT NOT NULL,
+        code_number INTEGER NOT NULL,
+        decimals INTEGER NOT NULL,
+        name TEXT NOT NULL
     )");
     // You can add more table creation statements here
 } catch (PDOException $e) {
