@@ -62,7 +62,7 @@ $invoicr->set("head", [
 $invoicr->set("billto", [
   $client["name"],
   $client["federal_id"],
-  $client["address"],
+  str_replace("\\n", "<br />", $client["address"]),
 ]);
 
 $invoiceItems = [];

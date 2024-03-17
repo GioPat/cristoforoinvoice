@@ -16,7 +16,7 @@ try {
 
 <h1>Clients</h1>
 <button id="toggleFormButton">Hide Form</button>
-<form id="clientForm" action="backend/manage_client.php" method="post">
+<form id="clientForm" action="/backend/manage_client.php" method="post">
     <label for="name">ID:</label>
     <input type="text" id="id" name="id"><br />
     <label for="name">Name:</label>
@@ -48,7 +48,7 @@ try {
                 <td><?= htmlspecialchars($client['name']) ?></td>
                 <td><?= htmlspecialchars($client['address']) ?></td>
                 <td><?= htmlspecialchars($client['federal_id']) ?></td>
-                <td><?= htmlspecialchars($client['address']) ?></td>
+                <td><?= htmlspecialchars($client['vat_number']) ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

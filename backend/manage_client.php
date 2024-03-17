@@ -54,6 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ]);
   }
   // Redirect back to the list_clients.php or display a success message
-  header("Location: /?page=clients"); // Redirect to the clients list
+  header("Location: /pages/clients.php");
   exit();
 }

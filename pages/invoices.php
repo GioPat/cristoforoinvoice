@@ -9,7 +9,7 @@ try {
         $year = date('Y');
     }
     $stmt = $pdo->query("
-        SELECT i.id, c.name as client_name, i.issue_date, i.invoice_number, i.due_date, (i.due_date < DATE('now')) as is_overdue
+        SELECT i.id, c.name as client_name, i.issue_date, i.invoice_number, i.due_date, (i.due_date < DATE('now') AND NOT payed) as is_overdue
         FROM (
             SELECT * FROM invoices WHERE substr(issue_date, 1, 4) = '$year'
         ) as i left join clients as c ON i.client_id = c.id

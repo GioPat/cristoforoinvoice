@@ -116,7 +116,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
 </table>
 <?php if($invoiceId): ?>
     <?= renderButton("/pages/invoices/manage_item.php?invoiceId=" . $invoiceId, "Add Item"); ?>
-    <?= renderbutton("/backend/export_invoice.php?invoiceId=" . $invoiceId, "Export PDF"); ?>
+    <?= renderbutton("/backend/export_invoice.php?invoiceId=" . $invoiceId, "Export PDF", "_blank"); ?>
 <?php endif; ?>
 <!-- Optionally, add a section here to manage invoice items if editing -->
 </body>
