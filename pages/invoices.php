@@ -13,7 +13,7 @@ try {
         FROM (
             SELECT * FROM invoices WHERE substr(issue_date, 1, 4) = '$year'
         ) as i left join clients as c ON i.client_id = c.id
-        ORDER BY issue_date DESC
+        ORDER BY invoice_number DESC, issue_date DESC
     ");
     $invoices = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
