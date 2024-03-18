@@ -17,13 +17,17 @@ Invoice number format tokens
 ```
   - Use PHP formatted string by setting the format row in the settings table, Y is the year, the rest is using sprintf format.
 ```
+# Core features
+- Manage clients
+- Manage Invoices
+- Warns of outdated invoices
+- Multi currencies
+- Locale aware
 
-# Core (missing) features
+# Other (missing) features
+- NO backup, or at least is demanded to your FS/Database.
+- NO CONFIG (Almost, you can set a remote DB connection string through the `DATABASE_CONN_STRING` env variable).
 
-- NO backup
-- NO config to be installed
-- NO headaches
-- NO CONFIG (Almost, you can set a remote DB connection string through the `DATABASE_CONN_STRING` env variable)
 
 
 # TODO
