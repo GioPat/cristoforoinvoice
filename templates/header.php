@@ -46,6 +46,7 @@ $errorMsg = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
 <?php endif; ?>
 <nav>
     <ul>
+        <li><a href="/">Home</a></li>
         <?php foreach ($routes as $name => $path): ?>
             <li><a href="<?= $path ?>"><?= ucfirst($name) ?></a></li>
         <?php endforeach; ?>

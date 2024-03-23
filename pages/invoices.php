@@ -27,7 +27,7 @@ try {
 <body>
 
 <h1>Invoices</h1>
-<button><a href="/pages/invoices/manage_invoice.php">Add New Invoice</a></button>
+<?= renderButton("/pages/invoices/manage_invoice.php", "Create new Invoice") ?>
 <table>
     <thead>
         <tr>

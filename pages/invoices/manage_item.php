@@ -35,16 +35,16 @@ $pageTitle = $itemId ? "Edit Invoice Item" : "Add New Invoice Item";
 <?php require(__DIR__."/../../templates/header.php"); ?>
 <h1><?= $itemId ? "Edit Invoice" . $invoiceId . " Item" : "Add New Invoice " . $invoiceId . " Item" ?></h1>
 <form action="/backend/manage_item.php" method="post">
-  <input type="hidden" name="id" value="<?= htmlspecialchars($itemId) ?>">
+  <input type="hidden" name="id" value="<?= $itemId ? htmlspecialchars($itemId) : null ?>">
   <input type="hidden" name="invoice_id" value="<?= htmlspecialchars($invoiceId) ?>">
   <label for="description">Description:</label>
-  <input type="text" id="description" name="description" value="<?= htmlspecialchars($item['description']) ?>" required> <br />
+  <input type="text" id="description" name="description" value="<?= $item['description'] ? htmlspecialchars($item['description']) : null ?>" required> <br />
   <label for="subdescription">Sub-Description:</label>
-  <input type="text" id="subdescription" name="subdescription" value="<?= htmlspecialchars($item['subdescription']) ?>"> <br />
+  <input type="text" id="subdescription" name="subdescription" value="<?= $item['subdescription'] ? htmlspecialchars($item['subdescription']) : null ?>"> <br />
   <label for="quantity">Quantity:</label>
-  <input type="snumber" id="quantity" min="0" name="quantity" value="<?= htmlspecialchars($item['quantity']) ?>" required> <br />
+  <input type="snumber" id="quantity" min="0" name="quantity" value="<?= $item['quantity'] ? htmlspecialchars($item['quantity']) : null ?>" required> <br />
   <label for="price">Price:</label>
-  <input type="number" id="price" min="0" name="price" value="<?= htmlspecialchars($item['price']) ?>" required> <br />
+  <input type="number" id="price" min="0" name="price" value="<?= $item['price'] ? htmlspecialchars($item['price']) : null ?>" required> <br />
   <label for="currency">Currency:</label>
   <select id="currency" name="currency" class="choices" placeholder="Select a currency">
     <?php foreach ($currencies as $currency): ?>

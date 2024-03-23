@@ -5,6 +5,7 @@ require_once(__DIR__."/../../components/button.php");
 $invoiceId = isset($_GET["invoiceId"]) ? (int)$_GET["invoiceId"] : null;
 $invoice = null;
 $items = [];
+$currency = null;
 // Check if we're editing an existing invoice
 if ($invoiceId) {
     $stmt = $pdo->prepare("SELECT * FROM invoices WHERE id = ?");
@@ -16,7 +17,9 @@ if ($invoiceId) {
     $afterDiscount = $subTotal - ($subTotal * $invoice['discount']);
     $vatAmount = $afterDiscount * $vat;
     $total = $afterDiscount + $vatAmount;
-    $currency = $items[0]["currency"];
+    if (count($items) > 0) {
+        $currency = $items[0]["currency"];
+    }
 }
 // Set defaults for a new invoice if not editing
 if (!$invoice) {
@@ -25,6 +28,7 @@ if (!$invoice) {
         'client_id' => null,
         'discount' => 0,
         'notes' => null,
+        'po_reference' => null,
         'issue_date' => date('Y-m-d'), // Today's date
         'due_date' => date('Y-m-d', strtotime('+30 days')) // 30 days from today
     ];
@@ -40,7 +44,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
 <h1><?= $invoiceId ? "Edit Invoice" : "Add New Invoice" ?></h1>
 <button class="button" id="toggleFormButton" >Hide Invoice details</button>
 <form id="invoiceForm" action="/backend/manage_invoice.php" method="post">
-    <input type="hidden" name="invoiceId" value="<?= htmlspecialchars($invoice['id']) ?>">
+    <input type="hidden" name="invoiceId" value="<?= $invoice['id'] ? htmlspecialchars($invoice['id']) : null ?>">
 
     <label for="client_id">Client:</label>
     <select id="client_id" name="client_id" class="choices" placeholder="Select a client">
@@ -52,19 +56,19 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
     </select>
 
     <label for="issue_date">Date:</label>
-    <input type="date" id="issue_date" name="issue_date" value="<?= htmlspecialchars($invoice['issue_date']) ?>" required>
+    <input type="date" id="issue_date" name="issue_date" value="<?= $invoice['issue_date'] ? htmlspecialchars($invoice['issue_date']) : null ?>" required>
 
     <label for="po_reference">Purchase Order / Contract reference:</label>
-    <input type="po_reference" id="po_reference" name="po_reference" value="<?= htmlspecialchars($invoice['po_reference']) ?>" required>
+    <input type="po_reference" id="po_reference" name="po_reference" value="<?= $invoice['po_reference'] ? htmlspecialchars($invoice['po_reference']) : null ?>" required>
 
     <label for="due_date">Due Date:</label>
-    <input type="date" id="due_date" name="due_date" value="<?= htmlspecialchars($invoice['due_date']) ?>" required>
+    <input type="date" id="due_date" name="due_date" value="<?= $invoice['due_date'] ? htmlspecialchars($invoice['due_date']) : null ?>" required>
     <br />
     <label for="discount">Discount:</label>
-    <input type="numer" id="discount" name="discount" min="0" max="1" value="<?= htmlspecialchars($invoice['discount']) ?>">
+    <input type="numer" id="discount" name="discount" min="0" max="1" value="<?= $invoice['discount'] ? htmlspecialchars($invoice['discount']) : null ?>">
     <br />
     <label for="notes">Notes:</label>
-    <input type="text" id="notes" name="notes" value="<?= htmlspecialchars($invoice['notes']) ?>">
+    <input type="text" id="notes" name="notes" value="<?= $invoice['notes'] ? htmlspecialchars($invoice['notes']) : null ?>">
     <br />
     <!-- Add more fields as needed -->
 
@@ -73,20 +77,22 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
     <input type="submit" onclick="return confirm('Are you sure you want to delete the invoice?')" name="delete" value="Delete Invoice">
     <?php endif; ?>
 </form>
+<?php if($invoiceId): ?>
 <div class="info-block">
     <div class="info-item">
         <div class="info-title">Sub-total</div>
-        <div class="info-value"><?= $subTotal . $currency ?></div>
+        <div class="info-value"><?= ($currency) ? $subTotal . $currency : "-"?></div>
     </div>
     <div class="info-item">
         <div class="info-title">After Discount</div>
-        <div class="info-value"><?= $afterDiscount . $currency ?></div>
+        <div class="info-value"><?= ($currency) ? $afterDiscount . $currency : "-" ?></div>
     </div>
     <div class="info-item">
         <div class="info-title">Grand Total (After VAT)</div>
-        <div class="info-value"><?= $total . $currency ?></div>
+        <div class="info-value"><?= ($currency) ? $total . $currency : "-" ?></div>
     </div>
 </div>
+<?php endif; ?>
 <table style="margin-bottom: 1rem;">
     <thead>
         <tr>
