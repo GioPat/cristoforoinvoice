@@ -2,7 +2,7 @@
 // db.php
 
 // Define the absolute path to your database file
-$dbConnString = $_ENV["DATABASE_CONN_STRING"] ?? "sqlite:" . dirname(__DIR__) . '/db.sqlite';
+$dbConnString = $_ENV["DATABASE_CONN_STRING"] ?? "sqlite:" . dirname(__DIR__) . '/database/db.sqlite';
 
 try {
     $pdo = new PDO($dbConnString);
