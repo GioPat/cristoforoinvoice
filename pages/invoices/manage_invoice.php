@@ -65,7 +65,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
     <input type="date" id="due_date" name="due_date" value="<?= $invoice['due_date'] ? htmlspecialchars($invoice['due_date']) : null ?>" required>
     <br />
     <label for="discount">Discount:</label>
-    <input type="numer" id="discount" name="discount" min="0" max="1" value="<?= $invoice['discount'] ? htmlspecialchars($invoice['discount']) : null ?>">
+    <input type="numer" id="discount" name="discount" min="0" max="1" value="<?= $invoice['discount'] ? htmlspecialchars($invoice['discount']) : 0 ?>">
     <br />
     <label for="notes">Notes:</label>
     <input type="text" id="notes" name="notes" value="<?= $invoice['notes'] ? htmlspecialchars($invoice['notes']) : null ?>">

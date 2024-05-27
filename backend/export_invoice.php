@@ -56,6 +56,7 @@ $invoicr->set("company", [
 $invoicr->set("head", [
 	["Invoice #", sprintf($invoiceNumberFormat, $invoice["invoice_number"])],
 	["P.O. reference", $invoice["po_reference"]],
+  ["Invoice Date", $invoice["issue_date"]],
 	["Due Date", $invoice["due_date"]]
 ]);
 
