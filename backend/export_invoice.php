@@ -44,7 +44,7 @@ $client = $pdo->query("SELECT * FROM clients WHERE id = " . $invoice['client_id'
 $invoiceNumberFormat = str_replace("Y", date("Y", strtotime($invoice["issue_date"])), $invoiceNumberFormat);
 $invoicr->set("company", [
   $companyInfo["company_logo"] ?? "/public/img/company_logo.png",
-  "C:/Users/giova/repos/other/personal/invoicing/public/img/company_logo.png",
+  "C:/Users/GiovanniPatruno/repos/personal/cristoforoinvoice/public/img/company_logo.png",
   $companyInfo["company_name"],
   $companyInfo["company_address"],
   "Phone: " . $companyInfo["company_phone"],

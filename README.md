@@ -4,8 +4,9 @@ Invoicing software with some very very basic ERP/CRM features aimed at easing th
 # QUICK(ONLY) start
 Just download freaking PHP 8.1 or whatever and run
 
-**Make sure to have the pg_sqlite and intl extension active for your PHP runtime**
-
+- Make sure to have the pg_sqlite, intl, mbstring, gd extensions enabled in your php.ini config `php --ini` to see where the ini is located
+- Run `php scritps/migrate.php` to migrate the db.
+- Then:
 ```php
 php -S localhost:8080
 ```

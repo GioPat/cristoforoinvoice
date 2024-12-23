@@ -1,7 +1,8 @@
 <?php
+
 // (A) HTML HEADER & STYLES
 $this->data = "<!DOCTYPE html><html><head><style>".
-"html,body{font-family:lato}#company,#billship{margin-bottom:30px}#billship,#company,#items{width:100%;border-collapse:collapse}#company td,#billship td,#items td,#items th{padding:10px}#company td{vertical-align:top}#bigi{margin-bottom:20px;font-size:28px;font-weight:700;color:#258ec7}#co-addr{font-size:.95em;color:#888}#co-right img{max-width:180px;height:auto}#billship td{width:33%}#items th{text-align:left;background:#98c5dc;padding:20px 10px}#items td{background:#e4eff5;border-bottom:1px solid #c8d2d7}.idesc{color:#6099b6}#items tr.ttl td{background:#98c5dc;border-bottom:none;font-weight:700}.right{text-align:right}#notes{background:#e4eff5;padding:10px;margin-top:30px}".
+"html,body{font-family:lato}#company,#billship{margin-bottom:10px}#billship,#company,#items{width:100%;border-collapse:collapse}#company td,#billship td,#items td,#items th{padding:10px}#company td{vertical-align:top}#bigi{margin-bottom:20px;font-size:28px;font-weight:700;color:#258ec7}#co-addr{font-size:.95em;color:#888}#co-right img{max-width:180px;height:auto}#billship td{width:33%}#items th{text-align:left;background:#98c5dc;padding:10px 10px}#items td{background:#e4eff5;border-bottom:1px solid #c8d2d7}.idesc{color:#6099b6}#items tr.ttl td{background:#98c5dc;border-bottom:none;font-weight:700}.right{text-align:right}#notes{background:#e4eff5;padding:10px;margin-top:10px}".
 "</style></head><body><div id='invoice'>";
 
 // (B) COMPANY
@@ -47,8 +48,12 @@ $this->data .= "</table>";
 // (H) NOTES
 if (count($this->notes)>0) {
 	$this->data .= "<div id='notes'>";
-	foreach ($this->notes as $n) {
-		$this->data .= $n."<br>";
+	$newline = "<br />";
+	foreach ($this->notes as $key => $n) {
+		if ($key == array_key_last($this->notes)) {
+			$newline = "";
+		}
+		$this->data .= $n.$newline;
 	}
 	$this->data .= "</div>";
 }

@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = filter_input(INPUT_POST, 'invoiceId', FILTER_UNSAFE_RAW);
     $issueDate = filter_input(INPUT_POST, 'issue_date', FILTER_UNSAFE_RAW);
     $year = date('Y', strtotime($issueDate));
-    $invoiceNumber = (($pdo->query("SELECT MAX(invoice_number) FROM invoices WHERE substr(issue_date, 1, 4) = '$year'")->fetchColumn()) ?? 0) + 1;
+    $invoiceNumber = (($pdo->query("SELECT MAX(invoice_number) FROM invoices WHERE canceled = false AND substr(issue_date, 1, 4) = '$year'")->fetchColumn()) ?? 0) + 1;
     $poReference = filter_input(INPUT_POST, 'po_reference', FILTER_UNSAFE_RAW);
     $client_id = filter_input(INPUT_POST, 'client_id', FILTER_UNSAFE_RAW);
     $issueDate = filter_input(INPUT_POST, 'issue_date', FILTER_UNSAFE_RAW);
