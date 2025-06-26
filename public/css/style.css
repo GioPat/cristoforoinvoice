@@ -52,6 +52,9 @@ body {
 	font-family: Helvetica;
 }
 
+main {
+	margin: 10px;
+}
 nav ul {
     list-style: none;
     margin: 0;
@@ -117,7 +120,6 @@ form {
 }
 
 label {
-	display: block; /* Each label on its own line */
 	margin-bottom: 10px; /* Space between the label and input */
 }
 

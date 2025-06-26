@@ -13,18 +13,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $issueDate = filter_input(INPUT_POST, 'issue_date', FILTER_UNSAFE_RAW);
     $dueDate = filter_input(INPUT_POST, 'due_date', FILTER_UNSAFE_RAW);
     $discount = filter_input(INPUT_POST, 'discount', FILTER_UNSAFE_RAW);
+    $payed = filter_input(INPUT_POST, 'payed', FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
     $notes = filter_input(INPUT_POST, 'notes', FILTER_UNSAFE_RAW);
 
     if($id == null) {
       $stmt = $pdo->prepare("
-        INSERT INTO invoices (invoice_number, client_id, issue_date, po_reference, due_date, notes, discount)
-        VALUES (:invoice_number, :client_id, :issue_date, :po_reference, :due_date, :notes, :discount)"
+        INSERT INTO invoices (invoice_number, client_id, issue_date, po_reference, payed, due_date, notes, discount)
+        VALUES (:invoice_number, :client_id, :issue_date, :po_reference, :payed, :due_date, :notes, :discount)"
       );
       $stmt->execute([
         ':invoice_number' => $invoiceNumber,
         ':client_id' => $client_id,
         ':issue_date' => $issueDate,
         ':po_reference' => $poReference,
+        ':payed' => $payed,
         ':due_date' => $dueDate,
         ':notes' => $notes,
         ':discount' => $discount,
@@ -33,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
       $stmt = $pdo->prepare("
         UPDATE invoices
-        SET client_id = :client_id, issue_date = :issue_date, po_reference = :po_reference, due_date = :due_date, notes = :notes, discount = :discount
+        SET client_id = :client_id, issue_date = :issue_date, po_reference = :po_reference, payed = :payed, due_date = :due_date, notes = :notes, discount = :discount
         WHERE id = :id"
       );
       $stmt->execute([
@@ -41,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ':client_id' => $client_id,
         ':issue_date' => $issueDate,
         ':po_reference' => $poReference,
+        ':payed' => $payed,
         ':due_date' => $dueDate,
         ':notes' => $notes,
         ':discount' => $discount,

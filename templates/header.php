@@ -54,5 +54,3 @@ $errorMsg = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
 </nav>
 <!-- Your page content goes here -->
 
-</body>
-</html>

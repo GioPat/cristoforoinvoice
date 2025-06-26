@@ -28,6 +28,7 @@ if (!$invoice) {
         'client_id' => null,
         'discount' => 0,
         'notes' => null,
+        'payed' => 0,
         'po_reference' => null,
         'issue_date' => date('Y-m-d'), // Today's date
         'due_date' => date('Y-m-d', strtotime('+30 days')) // 30 days from today
@@ -40,7 +41,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
 <!DOCTYPE html>
 <html lang="en">
 <?php require(__DIR__."/../../templates/header.php"); ?>
-
+<main>
 <h1><?= $invoiceId ? "Edit Invoice" : "Add New Invoice" ?></h1>
 <button class="button" id="toggleFormButton" >Hide Invoice details</button>
 <form id="invoiceForm" action="/backend/manage_invoice.php" method="post">
@@ -69,6 +70,10 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
     <br />
     <label for="notes">Notes:</label>
     <input type="text" id="notes" name="notes" value="<?= $invoice['notes'] ? htmlspecialchars($invoice['notes']) : null ?>">
+    <br />
+
+    <label for="payed">Payed:</label>
+    <input type="checkbox" id="payed" name="payed" value="1" <?= $invoice['payed'] ? 'checked' : '' ?>>
     <br />
     <!-- Add more fields as needed -->
 
@@ -124,6 +129,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
     <?= renderButton("/pages/invoices/manage_item.php?invoiceId=" . $invoiceId, "Add Item"); ?>
     <?= renderbutton("/backend/export_invoice.php?invoiceId=" . $invoiceId, "Export PDF", "_blank"); ?>
 <?php endif; ?>
+</main>
 <!-- Optionally, add a section here to manage invoice items if editing -->
 </body>
 <script>
@@ -145,7 +151,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
                 toggleButton.textContent = "Hide Invoice details";
             } else {
                 form.style.display = "none";
-                toggleButton.textContent = "Show Invoice details";
+                toggleButton.textContent = "Edit/Show Invoice details";
             }
         });
     });
@@ -161,7 +167,7 @@ $pageTitle = $invoiceId ? "Edit Invoice" : "Add New Invoice";
         const form = document.getElementById('invoiceForm');
         form.style.display = "none";
         const toggleButton = document.getElementById('toggleFormButton');
-        toggleButton.textContent = "Show Invoice details";
+        toggleButton.textContent = "Edit/Show Invoice details";
     }
 </script>
 </html>
